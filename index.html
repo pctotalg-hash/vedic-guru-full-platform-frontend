@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedic Guru - Vedic Mathematics & Computational Engine</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Slick Carousel CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Global UI Elements -->
+    <div id="offline-banner" class="offline-banner">
+        <i class="fas fa-wifi-slash"></i> You are currently offline. Some features may be unavailable.
+    </div>
+
+    <div id="global-loader" class="global-loader hidden">
+        <div class="spinner"></div>
+        <p id="loader-text" style="margin-top: 1rem; font-weight: 600;">Processing...</p>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="assets/vedic_guru_logo.png" alt="Vedic Guru Logo" class="logo-img">
+            <span class="logo-text">Vedic Guru</span>
+        </div>
+        <div class="nav-middle">
+            <ul class="nav-links">
+                <li><a href="#" onclick="showModule('home')">Home</a></li>
+                <li><a href="#" onclick="showModule('ask-doubt')">Ask a Doubt</a></li>
+                <li><a href="#" onclick="showModule('calculator')">Vedic Calculator</a></li>
+                <li><a href="#" onclick="showModule('computational-engine')">Vedic Math & Comp Engine</a></li>
+                <li><a href="#" onclick="showModule('sutras')">Sutras & Sub-sutras</a></li>
+                <li><a href="#" onclick="showModule('videos')">Videos</a></li>
+                <li><a href="#" onclick="showModule('quiz')">Quiz</a></li>
+                <li><a href="#" onclick="showModule('community')">Community</a></li>
+                <li><a href="#" onclick="showModule('leaderboard')">Leaderboard</a></li>
+                <li id="nav-item-profile" class="hidden"><a href="#" onclick="showModule('profile')">Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div id="auth-section">
+                <button class="btn btn-outline" id="signin-btn" onclick="signIn()">Sign In</button>
+            </div>
+            <div id="profile-section" class="hidden">
+                <div class="profile-dropdown">
+                    <button class="profile-btn" onclick="document.getElementById('prof-content').classList.toggle('show')"><i class="fas fa-user-circle"></i> Profile</button>
+                    <div id="prof-content" class="profile-dropdown-content">
+                        <div class="user-info">
+                            <p><strong>User Name</strong></p>
+                            <p>user@example.com</p>
+                        </div>
+                        <hr>
+                        <button class="btn btn-outline btn-block" onclick="showModule('profile')" style="margin-bottom: 0.5rem;"><i class="fas fa-id-card"></i> My Dashboard</button>
+                        <button class="btn btn-logout" onclick="logOut()">Log out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="main-content">
+        <!-- HOME MODULE (Front Page) -->
+        <div id="module-home" class="module active">
+            <!-- Header Banner -->
+            <section class="header-banner">
+                <div class="banner-content">
+                    <div class="banner-left">
+                        <img src="assets/vedic_math_header.png" alt="Vedic Mathematics Illustration" class="banner-img">
+                    </div>
+                    <div class="banner-right">
+                        <h1 class="main-character-text">Vedic Guru</h1>
+                        <blockquote class="vedic-quote">
+                            "Knowledge is structured in consciousness. The ancient sutras hold the binary rhythms of modern computation, waiting to be unlocked."
+                        </blockquote>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Feature Slider (Slick) -->
+            <section class="slider-section">
+                <div class="main-slider">
+                    <!-- Carousel 1: Information about vedic guru -->
+                    <div class="slide-item">
+                        <div class="slide-content slide-split">
+                            <div class="slide-left">
+                                <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&q=80&w=800" alt="Ancient to Modern" class="slide-img">
+                            </div>
+                            <div class="slide-right">
+                                <h2>About Vedic Guru</h2>
+                                <p>Bridging the ancient wisdom of the Vedas with modern computational power. Discover how centuries-old sutras can optimize modern algorithms and solve complex mathematical problems in a fraction of the usual time. Experience the synergy of history and future.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel 2: Ask the doubt -->
+                    <div class="slide-item">
+                        <div class="slide-content slide-split">
+                            <div class="slide-left">
+                                <h2>Ask The Doubt</h2>
+                                <p>Stuck on a complex problem? Utilize the wisdom of Vedic Mathematics to find an elegant solution. Upload your query or type it out, and our engine will provide step-by-step guidance based on traditional sutras.</p>
+                                <button class="btn btn-primary slider-btn" onclick="showModule('ask-doubt')">Ask the doubt <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                            <div class="slide-right">
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800" alt="Ask a Doubt" class="slide-img">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel 3: Quiz -->
+                    <div class="slide-item bg-image-slide" style="background-image: url('https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="slide-overlay">
+                            <h2>Quiz</h2>
+                            <p>Test your knowledge of Vedic mathematics and ancient computational techniques. We offer Daily, Weekly, and Monthly challenges.</p>
+                            <button class="btn btn-primary slider-btn" onclick="showModule('quiz')">Quiz <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <!-- Carousel 4: Leaderboard -->
+                    <div class="slide-item bg-image-slide" style="background-image: url('https://images.unsplash.com/photo-1528297506728-9533d2ac3fa4?auto=format&fit=crop&q=80&w=1200');">
+                        <div class="slide-overlay">
+                            <h2>Leaderboard</h2>
+                            <p>See where you stand among other Vedic scholars. Compete globally and rise to the top of the Today, Weekly, and Monthly charts.</p>
+                            <button class="btn btn-primary slider-btn" onclick="showModule('leaderboard')">Leaderboard <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Information Block -->
+            <section class="info-block">
+                <div class="container">
+                    <h2 class="section-title">Vedic Mathematics & Computational Engine</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fas fa-landmark info-icon"></i>
+                            <h3>History</h3>
+                            <p>Vedic Mathematics originates from the ancient Indian scriptures known as the Vedas. It consists of 16 core Sutras and 13 Sub-sutras that provide elegant mental calculation methods discovered by Sri Bharati Krishna Tirthaji.</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-microchip info-icon"></i>
+                            <h3>Application in Modern Era</h3>
+                            <p>In the digital age, these ancient algorithms are applied to modern computer processors, drastically reducing the complexity of multiplication, division, and cryptography in binary systems.</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-project-diagram info-icon"></i>
+                            <h3>Bridging Eras</h3>
+                            <p>By connecting the intuitive logic of human consciousness encoded in ancient texts with the brute force of modern ML engines, Vedic Guru creates a computational engine that is immensely fast and efficient.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Section Block -->
+            <section class="chat-section-block container">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3>Community Discussion</h3>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message incoming">
+                            <div class="msg-avatar">U</div>
+                            <div class="msg-content">
+                                <p>Has anyone used the Urdhva Tiryagbhyam sutra for binary multiplication?</p>
+                                <span class="msg-time">10:45 AM</span>
+                            </div>
+                        </div>
+                        <div class="message outgoing">
+                            <div class="msg-content">
+                                <p>Yes! It reduces the number of operations significantly compared to the standard shift-and-add method.</p>
+                                <span class="msg-time">10:47 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <div class="attach-dropdown">
+                            <button class="btn-attach" onclick="toggleAttachMenu()"><i class="fas fa-plus"></i></button>
+                            <div class="attach-menu hidden" id="attach-menu">
+                                <button><i class="fas fa-camera"></i> Camera</button>
+                                <button><i class="fas fa-image"></i> Photo</button>
+                                <button><i class="fas fa-file-alt"></i> Files</button>
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Type a message..." class="chat-input">
+                        <button class="btn-send"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Video Slider Section -->
+            <section class="video-slider-section container">
+                <h2 class="section-title">Featured Videos</h2>
+                <div class="video-slider">
+                    <div class="video-slide"><div class="video-placeholder"><i class="fas fa-play-circle"></i><p>Introduction to Sutras</p></div></div>
+                    <div class="video-slide"><div class="video-placeholder"><i class="fas fa-play-circle"></i><p>Nikhilam Multiplication</p></div></div>
+                    <div class="video-slide"><div class="video-placeholder"><i class="fas fa-play-circle"></i><p>Vedic Division Trick</p></div></div>
+                    <div class="video-slide"><div class="video-placeholder"><i class="fas fa-play-circle"></i><p>Square Roots mentally</p></div></div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- MODULE: ASK A DOUBT -->
+        <div id="module-ask-doubt" class="module hidden">
+            <div class="container module-page">
+                <h2>Ask a Doubt</h2>
+                <div class="doubt-interface">
+                    <p>Upload a photo of your question or type it below to get detailed solutions using Vedic Sutras and Sub-sutras.</p>
+                    <div class="doubt-input-box">
+                        <textarea id="doubt-text" placeholder="Type your computation or Vedic Math question here..."></textarea>
+                        <input type="file" id="doubt-image" accept="image/*" hidden onchange="handleImageUpload(event)">
+                        <div class="doubt-actions">
+                            <button class="btn btn-outline" onclick="document.getElementById('doubt-image').click()"><i class="fas fa-camera"></i> Upload Photo</button>
+                            <button class="btn btn-primary" onclick="submitDoubt()">Get Solution</button>
+                        </div>
+                    </div>
+                    <div class="doubt-solution hidden">
+                        <h3><i class="fas fa-graduation-cap"></i> Vedic Solution</h3>
+                        <div id="solution-steps" class="step-by-step vedic-steps-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: VEDIC CALCULATOR -->
+        <div id="module-calculator" class="module hidden">
+            <div class="container module-page">
+                <h2>Vedic Calculator</h2>
+                <div class="calculator-wrapper">
+                    <div class="calc-inputs">
+                        <input type="number" id="calc-num1" placeholder="Number 1">
+                        <select id="calc-op">
+                            <option value="*">Multiply (x)</option>
+                            <option value="/">Divide (/)</option>
+                            <option value="+">Add (+)</option>
+                            <option value="-">Subtract (-)</option>
+                        </select>
+                        <input type="number" id="calc-num2" placeholder="Number 2">
+                        <button class="btn btn-primary" onclick="calculateVedic()">Calculate</button>
+                    </div>
+                    <div class="calc-result" id="calc-result" style="display:none;">
+                        <h3>Detailed Analysis</h3>
+                        <p id="calc-sutra-name" class="sutra-used"></p>
+                        <div id="calc-steps" class="step-by-step"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: VEDIC MATH & COMP ENGINE -->
+        <div id="module-computational-engine" class="module hidden">
+            <div class="container module-page">
+                <h2>Vedic Mathematic & Computational Engine</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchSubTab('engine', 'history')">History</button>
+                    <button class="tab-btn" onclick="switchSubTab('engine', 'information')">Information</button>
+                    <button class="tab-btn" onclick="switchSubTab('engine', 'application')">Application</button>
+                    <button class="tab-btn" onclick="switchSubTab('engine', 'founder')">Founder</button>
+                </div>
+                
+                <div id="engine-history" class="sub-tab-content active">
+                    <h3>History of Vedic Mathematics</h3>
+                    <img src="assets/history_ancient.png" alt="Ancient Ascent of Vedic Knowledge" class="article-img">
+                    <p>Vedic Mathematics is a term given to this ancient system of Indian Mathematics which was rediscovered from the Vedas between 1911 and 1918 by Sri Bharati Krishna Tirthaji (1884-1960). According to his research all of mathematics is based on sixteen Sutras, or word-formulae. For example, "Vertically and Crosswise" is one of these Sutras. These formulae describe the way the mind naturally works and are therefore a great help in directing the student to the appropriate method of solution.</p>
+                    <p>Historically, numbers and mathematics have been central to Indian spiritual and practical texts. The Sulba Sutras provided geometric instructions, but it was Bharati Krishna Tirthaji who extracted these 16 aphorisms from the Atharva Veda appendix. He envisioned that these sutras, rooted deeply in ancient consciousness, held the key to universal mathematical harmony. Today, his work allows us to solve complex arithmetic and algebraic equations in a matter of seconds, bypassing tedious traditional steps.</p>
+                </div>
+
+                <div id="engine-information" class="sub-tab-content hidden">
+                    <h3>Information on Computational Engine</h3>
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" alt="Tech" class="article-img">
+                    <p>The Vedic Computational Engine is an advanced algorithm suite that integrates the 16 Sutras and 13 Sub-sutras into a micro-processing environment. Modern computing relies heavily on binary mathematics, where multiplication and division take numerous clock cycles. By applying sutras like Urdhva Tiryagbhyam, the computational engine parallelizes addition and shifting operations in hardware or software layers.</p>
+                    <p>This information module highlights how the fusion of AI and Vedic math creates a powerful back-end engine. A typical Floating Point Unit (FPU) in a processor requires substantial energy and time to compute heavy mathematical loads. By rewriting calculating subroutines using Vedic principles, we observe a dramatic decrease in the propagation delay within logic gates. This engine is designed to handle big-data processing, AI matrix multiplications, and cryptographic hashing swiftly.</p>
+                </div>
+
+                <div id="engine-application" class="sub-tab-content hidden">
+                    <h3>Application in Modern Era</h3>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" alt="Application" class="article-img">
+                    <p>How does Vedic Math connect the ancient era to the modern computational era? The answer lies in algorithmic efficiency. In today's era of Artificial Intelligence, Deep Learning, and Quantum Computing, processing speed is the primary bottleneck. The application of Vedic mathematics in modern computer architecture (like ALUs) demonstrates up to a 30% reduction in delay and power consumption.</p>
+                    <p>For example, in digital signal processing (DSP), multiplying two large binary arrays often uses standard algorithms like Booth's or Array multiplier. Substituting this with the Vedic Urdhva Tiryagbhyam (Vertically and Crosswise) multiplier significantly lowers the time complexity. This connection shows a profound leap: ancient sages optimizing thought processes computationally long before the advent of silicon chips, effectively bridging archaic wisdom with futuristic technology.</p>
+                </div>
+
+                <div id="engine-founder" class="sub-tab-content hidden">
+                    <h3>Founder of Vedic Mathematics</h3>
+                    <img src="assets/founder_vedic.png" alt="Founder Illustration" class="article-img">
+                    <p>Sri Bharati Krishna Tirthaji Maharaja is revered as the founder of the system we now call Vedic Mathematics. Born in 1884 as Venkatraman Shastri, he possessed immense intellectual prowess, earning Master's degrees in various subjects including Mathematics, History, and Philosophy. He dedicated years of study and deep meditation in the forests near Sringeri to rediscover these sutras from the Atharva Veda.</p>
+                    <p>He cataloged 16 core Sutras and 13 Sub-sutras that cover all aspects of mathematics, from basic arithmetic to advanced calculus and astronomy. The original manuscript containing 16 volumes on these sutras was lost, but he managed to rewrite a single introductory volume before his passing in 1960. His monumental work forms the bedrock of this platform, preserving his legacy and expanding his vision into the age of modern computing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: SUTRAS & SUB-SUTRAS -->
+        <div id="module-sutras" class="module hidden">
+            <div class="container module-page">
+                <h2>Sutras & Sub-sutras</h2>
+                
+                <div class="sutras-controls">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="sutra-search" placeholder="Search by title or meaning..." onkeyup="filterSutras()">
+                    </div>
+                    <div class="tabs">
+                        <button class="tab-btn active" id="tab-sutras" onclick="switchSutraTab('sutras')">16 Sutras</button>
+                        <button class="tab-btn" id="tab-sub-sutras" onclick="switchSutraTab('sub-sutras')">13 Sub-sutras</button>
+                    </div>
+                </div>
+
+                <div id="sutras-loader" class="loader-container">
+                    <div class="spinner"></div>
+                    <p>Loading Vedic Wisdom...</p>
+                </div>
+
+                <div id="sutras-container" class="sutras-grid">
+                    <!-- JavaScript will populate this -->
+                </div>
+
+                <div id="sutras-empty" class="empty-state hidden">
+                    <i class="fas fa-book-open"></i>
+                    <p>No data available matching your search.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: VIDEOS -->
+        <div id="module-videos" class="module hidden">
+            <div class="container module-page">
+                <div class="module-header-flex">
+                    <h2>Videos & Tutorials</h2>
+                    <button id="btn-upload-video" class="btn btn-primary hidden" onclick="openVideoUploadModal()"><i class="fas fa-upload"></i> Upload Video</button>
+                </div>
+                <div class="video-slider" id="video-grid">
+                    <!-- JavaScript will populate this -->
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: QUIZ -->
+        <div id="module-quiz" class="module hidden">
+            <div class="container module-page">
+                <h2>Vedic Quiz Mastery</h2>
+                
+                <!-- Quiz Dashboard -->
+                <div id="quiz-dashboard">
+                    <div class="quiz-grid">
+                        <div class="quiz-card">
+                            <div class="quiz-badge daily">Daily</div>
+                            <i class="fas fa-calendar-day quiz-icon"></i>
+                            <h3>Daily Challenge</h3>
+                            <p>5 Quick questions to keep your skills sharp.</p>
+                            <span class="quiz-status" id="status-daily">Loading...</span>
+                            <button class="btn btn-primary" onclick="startQuiz('daily')">Start Quiz</button>
+                        </div>
+                        <div class="quiz-card">
+                            <div class="quiz-badge weekly">Weekly</div>
+                            <i class="fas fa-calendar-week quiz-icon"></i>
+                            <h3>Weekly Grand Quiz</h3>
+                            <p>10 Medium difficulty questions on various sutras.</p>
+                            <span class="quiz-status" id="status-weekly">Loading...</span>
+                            <button class="btn btn-primary" onclick="startQuiz('weekly')">Start Quiz</button>
+                        </div>
+                        <div class="quiz-card">
+                            <div class="quiz-badge monthly">Monthly</div>
+                            <i class="fas fa-trophy quiz-icon"></i>
+                            <h3>Monthly Vedic Pro</h3>
+                            <p>15 Advanced questions for true masters.</p>
+                            <span class="quiz-status" id="status-monthly">Loading...</span>
+                            <button class="btn btn-primary" onclick="startQuiz('monthly')">Start Quiz</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-history-section">
+                        <h3>Your Recent Performance</h3>
+                        <div id="quiz-history-list" class="history-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Quiz View -->
+                <div id="quiz-active" class="hidden">
+                    <div class="quiz-header">
+                        <h3 id="active-quiz-title">Daily Challenge</h3>
+                        <div class="quiz-meta">
+                            <span id="quiz-timer"><i class="fas fa-clock"></i> 00:00</span>
+                            <span id="quiz-progress-text">Question 1 of 5</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="quiz-progress-bar" class="progress-bar" style="width: 20%;"></div>
+                    </div>
+                    <div id="question-container" class="question-container">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="quiz-controls">
+                        <button id="btn-next-question" class="btn btn-primary" onclick="nextQuestion()">Next Question</button>
+                        <button id="btn-submit-quiz" class="btn btn-success hidden" onclick="submitCurrentQuiz()">Submit Quiz</button>
+                    </div>
+                </div>
+
+                <!-- Quiz Results View -->
+                <div id="quiz-results" class="hidden">
+                    <div class="results-header">
+                        <div class="score-circle">
+                            <span id="result-score">0</span>/<span id="result-max">5</span>
+                        </div>
+                        <h3 id="result-title">Quiz Completed!</h3>
+                        <p id="result-suggestion">Keep practicing!</p>
+                    </div>
+                    <div id="results-breakdown" class="results-breakdown">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="results-actions">
+                        <button class="btn btn-primary" onclick="showQuizDashboard()">Back to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: LEADERBOARD -->
+        <div id="module-leaderboard" class="module hidden">
+            <div class="container module-page">
+                <h2>Leaderboard</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchSubTab('leaderboard', 'daily')">Daily Leaderboard</button>
+                    <button class="tab-btn" onclick="switchSubTab('leaderboard', 'weekly')">Weekly Leaderboard</button>
+                    <button class="tab-btn" onclick="switchSubTab('leaderboard', 'monthly')">Monthly Leaderboard</button>
+                </div>
+                <div class="leaderboard-content" id="leaderboard-daily">
+                    <p style="padding: 2rem">Loading rankings...</p>
+                </div>
+                 <div class="leaderboard-content hidden" id="leaderboard-weekly">
+                    <p style="padding: 2rem">Loading rankings...</p>
+                </div>
+                 <div class="leaderboard-content hidden" id="leaderboard-monthly">
+                    <p style="padding: 2rem">Loading rankings...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: COMMUNITY -->
+        <div id="module-community" class="module hidden">
+            <div class="container module-page">
+                <h2>Community Discussion & Doubts</h2>
+                <div class="community-tabs">
+                    <button class="tab-btn active" onclick="switchCommunityTab('chat')">Global Chat</button>
+                    <button class="tab-btn" onclick="switchCommunityTab('doubts')">Community Doubts</button>
+                </div>
+
+                <div id="community-chat" class="community-content active">
+                    <div class="chat-container full-chat">
+                        <div class="chat-messages" id="community-chat-messages">
+                            <!-- Messages will be populated here -->
+                        </div>
+                        <!-- Reply Preview -->
+                        <div id="reply-preview" class="reply-preview hidden">
+                            <div class="reply-preview-content">
+                                <span class="reply-to-user">Replying to: <strong><span id="reply-username">User</span></strong></span>
+                                <p id="reply-text" class="reply-msg-text">Message content...</p>
+                            </div>
+                            <button class="cancel-reply" onclick="cancelReply()"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="community-chat-input" placeholder="Type a message..." class="chat-input">
+                            <button class="btn-send" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="community-doubts" class="community-content hidden">
+                    <div class="doubts-list" id="community-doubts-list">
+                        <!-- Doubts will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODULE: PROFILE DASHBOARD -->
+        <div id="module-profile" class="module hidden">
+            <div class="container module-page profile-dashboard">
+                <div class="profile-layout">
+                    <!-- Sidebar: Profile Info -->
+                    <aside class="profile-sidebar">
+                        <div class="profile-card profile-main-info">
+                            <div class="profile-image-container">
+                                <img id="profile-display-img" src="https://via.placeholder.com/150" alt="Profile">
+                                <button class="btn-edit-img" onclick="document.getElementById('upload-avatar').click()"><i class="fas fa-camera"></i></button>
+                                <input type="file" id="upload-avatar" class="hidden" accept="image/*" onchange="handleAvatarUpload(event)">
+                            </div>
+                            <h2 id="profile-display-name">User Name</h2>
+                            <p id="profile-display-email" class="profile-email">user@example.com</p>
+                            <div class="profile-rank-badge">
+                                <span id="profile-display-rank">Scholar</span>
+                                <span class="points-label"><i class="fas fa-star"></i> <span id="profile-display-points">0</span> pts</span>
+                            </div>
+                            <p class="joined-date"><i class="fas fa-calendar-alt"></i> Joined: <span id="profile-joined-date">Jan 2026</span></p>
+                            
+                            <div class="streak-badge">
+                                <span class="streak-icon">🔥</span>
+                                <span id="profile-streak-count">0</span> Day Streak
+                            </div>
+
+                            <div class="profile-actions">
+                                <button class="btn btn-outline btn-block" onclick="openEditProfileModal()"><i class="fas fa-edit"></i> Edit Profile</button>
+                                <button class="btn btn-primary btn-block" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> Download Report</button>
+                            </div>
+                        </div>
+
+                        <div class="profile-card insights-card">
+                            <h3><i class="fas fa-lightbulb"></i> AI Insights</h3>
+                            <p id="profile-ai-insight">Analyzing your performance... Keep practicing!</p>
+                        </div>
+                    </aside>
+
+                    <!-- Main Content: Stats & Charts -->
+                    <div class="profile-main">
+                        <!-- Stats Grid -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                                <div class="stat-info">
+                                    <h4 id="stat-total-quizzes">0</h4>
+                                    <p>Total Quizzes</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                                <div class="stat-info">
+                                    <h4 id="stat-avg-score">0%</h4>
+                                    <p>Avg Accuracy</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                                <div class="stat-info">
+                                    <h4 id="stat-best-score">0</h4>
+                                    <p>Best Score</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                <div class="stat-info">
+                                    <h4 id="stat-total-time">0m</h4>
+                                    <p>Total Time</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Charts -->
+                        <div class="charts-section">
+                            <div class="profile-card chart-container">
+                                <h3><i class="fas fa-chart-line"></i> Score History</h3>
+                                <canvas id="scoreChart"></canvas>
+                            </div>
+                            <div class="profile-card chart-container">
+                                <h3><i class="fas fa-chart-bar"></i> Quiz Activity</h3>
+                                <canvas id="activityChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Badges Grid -->
+                        <div class="profile-card badges-section">
+                            <h3><i class="fas fa-medal"></i> Your Badges</h3>
+                            <div id="badges-grid" class="badges-grid">
+                                <!-- Badges will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- History List -->
+                        <div class="profile-card history-section">
+                            <h3><i class="fas fa-history"></i> Recent Quiz Attempts</h3>
+                            <div class="history-table-container">
+                                <table class="history-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Quiz Type</th>
+                                            <th>Score</th>
+                                            <th>Time</th>
+                                            <th>Accuracy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="profile-history-list">
+                                        <!-- History items will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Sign In</h3>
+                <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Google Sign-In Button -->
+                <button type="button" class="btn-google" onclick="signInWithGoogle()">
+                    <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Sign in with Google
+                </button>
+
+                <div class="auth-divider">
+                    <span>or sign in with email</span>
+                </div>
+
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <div id="register-fields" class="hidden">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="auth-email" placeholder="Enter your email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="auth-username" required placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="auth-password" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="auth-submit-btn">Sign In</button>
+                </form>
+                <div class="modal-footer">
+                    <p id="switch-auth-text">Don't have an account? <a href="#" onclick="toggleAuthMode(event)">Register</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI TUTOR FLOATING WIDGET -->
+    <div id="ai-tutor-widget" class="ai-tutor-widget">
+        <!-- Chat Window -->
+        <div id="ai-chat-window" class="ai-chat-window hidden">
+            <div class="ai-chat-header">
+                <div class="ai-header-info">
+                    <i class="fas fa-robot"></i>
+                    <span>Vedic AI Tutor</span>
+                </div>
+                <button class="ai-close-btn" onclick="toggleAIChat()">&times;</button>
+            </div>
+            <div id="ai-chat-messages" class="ai-chat-messages">
+                <!-- Messages will appear here -->
+            </div>
+            <div id="ai-quick-buttons" class="ai-quick-buttons">
+                <button class="btn-ai-quick" onclick="handleAIQuickAction('Explain sutra')">Explain sutra</button>
+                <button class="btn-ai-quick" onclick="handleAIQuickAction('Solve problem')">Solve problem</button>
+                <button class="btn-ai-quick" onclick="handleAIQuickAction('Give example')">Give example</button>
+            </div>
+            <div id="ai-typing-indicator" class="ai-typing-indicator hidden">
+                <span></span><span></span><span></span> AI is thinking...
+            </div>
+            <div class="ai-chat-input-area">
+                <input type="text" id="ai-chat-input" placeholder="Ask a Vedic math question..." onkeypress="if(event.key === 'Enter') sendAIMessage()">
+                <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        
+        <!-- Floating Button -->
+        <button id="ai-tutor-toggle" class="ai-tutor-toggle" onclick="toggleAIChat()">
+            <i class="fas fa-comment-dots"></i>
+            <span class="ai-badge hidden">1</span>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h4>About Vedic Guru</h4>
+                <p>A professional platform dedicated to merging the ancient wisdom of Vedic Mathematics with the brute computational power of the modern era. Empowering minds with superfast calculation sutras.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Modules Information</h4>
+                <ul>
+                    <li><strong>Ask a Doubt:</strong> AI-driven query solving using sutras.</li>
+                    <li><strong>Vedic Calculator:</strong> Step-by-step arithmetic breakdown.</li>
+                    <li><strong>Engine Info:</strong> History, Application, and Architect.</li>
+                    <li><strong>Sutras & Sub-sutras:</strong> Complete 16 & 13 rulebook.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Vedic Guru. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+
+    <!-- MODAL: EDIT PROFILE -->
+    <div id="edit-profile-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="close-btn" onclick="closeEditProfileModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-profile-form" onsubmit="handleEditProfile(event)">
+                    <div class="form-group">
+                        <label>Display Name</label>
+                        <input type="text" id="edit-name" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Profile Image URL</label>
+                        <input type="text" id="edit-profile-pic" placeholder="Image URL (or upload below)">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="edit-profile-submit-btn">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL: VIDEO UPLOAD -->
+    <div id="video-upload-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeVideoUploadModal()">&times;</span>
+            <h3>Upload Vedic Video</h3>
+            <form id="video-upload-form" class="auth-form">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="upload-video-title" required placeholder="Enter video title">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="upload-video-desc" placeholder="Briefly describe the content"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="upload-video-category">
+                        <option value="Sutras">Sutras</option>
+                        <option value="Tricks">Tricks</option>
+                        <option value="Calculations">Calculations</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Video File (MP4/WebM)</label>
+                    <input type="file" id="upload-video-file" accept="video/mp4,video/webm" required>
+                </div>
+                
+                <div id="upload-progress-container" class="progress-container hidden">
+                    <div id="upload-progress-bar" class="progress-bar"></div>
+                    <p id="upload-progress-text">0%</p>
+                </div>
+
+                <button type="submit" class="btn-auth">Upload Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: VIDEO PLAYER -->
+    <div id="video-player-modal" class="modal hidden">
+        <div class="modal-content video-player-content">
+            <span class="close" onclick="closeVideoPlayer()">&times;</span>
+            <h3 id="player-title">Video Title</h3>
+            <div class="video-container">
+                <video id="main-video-player" controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-info">
+                <p id="player-desc">Description goes here...</p>
+                <p id="player-meta" class="meta-info">Uploaded by Admin</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- App Scripts -->
+    <script type="module" src="firebase.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
